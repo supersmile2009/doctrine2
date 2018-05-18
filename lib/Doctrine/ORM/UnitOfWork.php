@@ -1,4 +1,7 @@
-<?php
+<?php /** @noinspection ReturnTypeCanBeDeclaredInspection */
+/** @noinspection SpellCheckingInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -2345,7 +2348,7 @@ class UnitOfWork implements PropertyChangedListener
                     // break; is commented intentionally!
 
                 case ($relatedEntities instanceof Collection):
-                case (is_array($relatedEntities)):
+                case (\is_array($relatedEntities)):
                     if (($assoc['type'] & ClassMetadata::TO_MANY) <= 0) {
                         throw ORMInvalidArgumentException::invalidAssociation(
                             $this->em->getClassMetadata($assoc['targetEntity']),

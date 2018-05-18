@@ -1169,7 +1169,7 @@ class ClassMetadataInfo implements ClassMetadata
             return $fieldName === $this->identifier[0];
         }
 
-        return in_array($fieldName, $this->identifier, true);
+        return \in_array($fieldName, $this->identifier, true);
     }
 
     /**
