@@ -30,6 +30,7 @@ use Doctrine\ORM\Query\FilterCollection;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Persistence\ObjectRepository;
+use Psr\Log\LoggerInterface;
 use Throwable;
 use const E_USER_DEPRECATED;
 use function trigger_error;
@@ -141,6 +142,10 @@ use function trigger_error;
      * @var \Doctrine\ORM\Cache The second level cache regions API.
      */
     private $cache;
+    /**
+     * @var Psr\Log\LoggerInterface
+     */
+    private $logger;
 
     /**
      * Creates a new EntityManager that operates on the given database connection
@@ -580,6 +585,9 @@ use function trigger_error;
         $this->clear();
 
         $this->closed = true;
+        if (null !== $this->logger) {
+            $this->logger->critical('EntityManager is being closed', ['stacktrace' => debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)]);
+        }
     }
 
     /**
@@ -958,5 +966,10 @@ use function trigger_error;
                     throw TransactionRequiredException::transactionRequired();
                 }
         }
+    }
+
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 }
